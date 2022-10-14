@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "visual-regression-base": "npx cypress run --env type=base",
+    "visual-regression-actual": "npx cypress run --env type=actual"
   },
   "repository": {
     "type": "git",
@@ -27,6 +29,7 @@
     "react-dom": "^16.13.0"
   },
   "devDependencies": {
-    "cypress": "^10.10.0"
+    "cypress": "^10.10.0",
+    "cypress-visual-regression": "^1.7.0"
   }
 }
