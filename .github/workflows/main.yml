@@ -16,7 +16,6 @@ jobs:
       - uses: xSAVIKx/artifact-exists-action@v0
         with:
           name: 'coverage-artifact'
-      if: ${{ steps.check_coverage_artifact.outputs.exists}}
       - uses: actions/download-artifact@v3
         with:
           name: snapshots-base
