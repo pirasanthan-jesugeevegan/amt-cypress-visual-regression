@@ -47,9 +47,7 @@ jobs:
         run: npm install
       # Update the snapshots based on the current UI
       - name: Update snapshots
-        run: npm run int-test
-          env: 
-            type: 'base'
+        run: npm run int2-test
       # Commit the changes to the pull request branch
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
