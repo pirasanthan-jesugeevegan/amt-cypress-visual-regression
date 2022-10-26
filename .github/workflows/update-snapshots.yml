@@ -64,6 +64,6 @@ jobs:
       - uses: actions/upload-artifact@v2
         if: always()
         with:
-          name: cypress/snapshots/base
+          name: snapshots-base
           path: cypress/snapshots/base/
           retention-days: 30
