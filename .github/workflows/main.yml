@@ -13,6 +13,13 @@ jobs:
     name: Run Tests
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: snapshots-base
+          path: cypress/snapshots/base/
+      - name: Display structure of downloaded files
+        run: ls -R
+        working-directory: cypress/snapshots/base/
       # Checkout and setup
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
