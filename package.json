@@ -9,8 +9,8 @@
     "start": "next start",
     "int-test": "start-server-and-test next http://localhost:3000 visual-regression-actual",
     "int2-test": "start-server-and-test next http://localhost:3000 visual-regression-base",
-    "visual-regression-base": "npx cypress run --env type=base",
-    "visual-regression-actual": "npx cypress run --env type=actual"
+    "visual-regression-base": "npx cypress run --headless --browser chrome --env type=base",
+    "visual-regression-actual": "npx cypress run --headless --browser chrome --env type=actual"
   },
   "repository": {
     "type": "git",
