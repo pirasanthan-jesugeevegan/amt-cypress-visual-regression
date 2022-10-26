@@ -21,11 +21,12 @@ jobs:
       - name: Install dependencies
         run: npm install
       # Update the snapshots based on the current UI
+      if: ${{ github.event.issue.pull_request && github.event.comment.body == '/update-snapshots'}}
       - uses: actions/download-artifact@v3
           with:
             name: snapshots-base
             path: cypress/snapshots/base
-    
+      if: ${{ github.event.issue.pull_request && github.event.comment.body == '/update-snapshots'}}
       - name: Display structure of downloaded files
         run: ls -R
         working-directory: cypress/snapshots/base
