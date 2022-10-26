@@ -1,3 +1,15 @@
+# This workflow's goal is forcing an update of the reference snapshots used
+# by Playwright tests. It runs whenever you post a new pull request comment
+# that strictly matches the "/update-snapshots".
+# From a high-level perspective, it works like this:
+# 1. Because of a GitHub Action limitation, this workflow is triggered on every
+#    comment posted on a issue or pull request. We manually interrupt it unless
+#    the comment content strictly matches "/update-snapshots" and we're in a
+#    pull request.
+# 2. Use the GitHub API to grab the information about the branch name and SHA of
+#    the latest commit of the current pull request.
+# 3. Update the Playwright reference snapshots based on the UI of this branch.
+# 4. Commit the newly generated Playwright reference snapshots into this branch.
 name: Update Snapshots
 
 on:
@@ -14,7 +26,6 @@ jobs:
     # the "/update-snapshots" string
     if: ${{ github.event.issue.pull_request && github.event.comment.body == '/update-snapshots'}}
     timeout-minutes: 60
-    name: Update snapshots
     runs-on: ubuntu-latest
     steps:
       # Checkout and do a deep fetch to load all commit IDs
@@ -44,7 +55,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '14.x'
-       - name: Install dependencies
+      - name: Install dependencies
         run: npm install
       # Update the snapshots based on the current UI
       - name: Update snapshots
