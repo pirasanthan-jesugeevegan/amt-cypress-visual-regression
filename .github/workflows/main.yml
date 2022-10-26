@@ -9,8 +9,8 @@ on:
     types: [created]
 
 jobs:
-  test:
-    timeout-minutes: 60
+  run-test:
+    name: Run Tests
     runs-on: ubuntu-latest
     steps:
       # Checkout and setup
@@ -34,9 +34,9 @@ jobs:
   updatesnapshots:
     # Run this job only on comments of pull requests that strictly match
     # the "/update-snapshots" string
-    if: ${{ github.event.issue.pull_request && github.event.comment.body == '/update-snapshots'}}
-    timeout-minutes: 60
+    name: Update snapshots
     runs-on: ubuntu-latest
+    if: ${{ github.event.issue.pull_request && github.event.comment.body == '/update-snapshots'}}
     steps:
       # Checkout and do a deep fetch to load all commit IDs
       - uses: actions/checkout@v2
