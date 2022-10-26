@@ -17,20 +17,10 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
-          node-version: "14.x"
+          node-version: '14.x'
       - name: Install dependencies
         run: npm install
       # Update the snapshots based on the current UI
-      if: ${{ github.event.issue.pull_request && github.event.comment.body == '/update-snapshots'}}
-      - uses: actions/download-artifact@v3
-          with:
-            name: snapshots-base
-            path: cypress/snapshots/base
-      if: ${{ github.event.issue.pull_request && github.event.comment.body == '/update-snapshots'}}
-      - name: Display structure of downloaded files
-        run: ls -R
-        working-directory: cypress/snapshots/base
-        
       - name: Update snapshots
         run: npm run int-test
       # Upload the test result artifacts
@@ -40,7 +30,7 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
-    
+
   updatesnapshots:
     # Run this job only on comments of pull requests that strictly match
     # the "/update-snapshots" string
