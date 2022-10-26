@@ -14,13 +14,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: xSAVIKx/artifact-exists-action@v0
+        id: check_snapshots_base
         with:
-          name: 'coverage-artifact'
+          name: 'snapshots-base'
+
       - uses: actions/download-artifact@v3
+        if: steps.check_snapshots_base.outputs.exists == 'true'
         with:
           name: snapshots-base
           path: cypress/snapshots/base/
       - name: Display structure of downloaded files
+        if: steps.check_snapshots_base.outputs.exists == 'true'
         run: ls -R
         working-directory: cypress/snapshots/base/
       # Checkout and setup
