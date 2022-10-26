@@ -41,8 +41,8 @@ jobs:
       - uses: actions/upload-artifact@v2
         if: failure()
         with:
-          name: playwright-report
-          path: playwright-report/
+          name: snapshots-diff
+          path: cypress/snapshots/diff/
           retention-days: 30
 
   updatesnapshots:
