@@ -1,0 +1,30 @@
+# The name of our workflow, showing in Github under the 'Actions' panel
+name: Cypress Tests
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  test:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout and setup
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14.x'
+      - name: 🧰 Install cypress and verify
+        run: npm install
+
+      - name: 🐛 Run Cypress tests
+        run: npm run int-test
+      # Upload the test result artifacts
+      - uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30

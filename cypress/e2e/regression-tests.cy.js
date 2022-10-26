@@ -1,7 +1,7 @@
 // Use the 'describe' to give your test a name
 describe('Home', () => {
   // The 'it' property indicates a certain condition you're expecting
-  it('passes', () => {
+  it('Page ', () => {
     // Navigate to the homepage (make sure it's running)
     cy.visit('http://localhost:3000/');
 

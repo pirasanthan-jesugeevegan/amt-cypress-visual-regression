@@ -7,14 +7,14 @@ module.exports = defineConfig({
       getCompareSnapshotsPlugin(on, config);
       on('before:browser:launch', (browser = {}, launchOptions) => {
         if (browser.name === 'chrome' && browser.isHeadless) {
-          launchOptions.preferences.width = 1920;
-          launchOptions.preferences.height = 1080;
+          launchOptions.preferences.width = 1024;
+          launchOptions.preferences.height = 768;
         }
 
         return launchOptions;
       });
     },
   },
-  viewportWidth: 1920,
-  viewportHeight: 1080,
+  viewportWidth: 1024,
+  viewportHeight: 768,
 });

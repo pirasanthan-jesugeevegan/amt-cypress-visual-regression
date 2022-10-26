@@ -7,6 +7,7 @@
     "dev": "next",
     "build": "next build",
     "start": "next start",
+    "int-test": "start-server-and-test next http://localhost:3000 visual-regression-actual",
     "visual-regression-base": "npx cypress run --env type=base",
     "visual-regression-actual": "npx cypress run --env type=actual"
   },
@@ -30,6 +31,7 @@
   },
   "devDependencies": {
     "cypress": "^10.10.0",
-    "cypress-visual-regression": "^1.7.0"
+    "cypress-visual-regression": "^1.7.0",
+    "start-server-and-test": "^1.11.6"
   }
 }
