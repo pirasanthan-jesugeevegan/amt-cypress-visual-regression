@@ -1,93 +1,30 @@
-name: Playwright Tests
+name: Cypress Tests
 
 on:
   push:
     branches: [main, master]
   pull_request:
     branches: [main, master]
-  issue_comment:
-    types: [created]
 
 jobs:
   run-test:
     name: Run Tests
     runs-on: ubuntu-latest
     steps:
-      - uses: xSAVIKx/artifact-exists-action@v0
-        id: check_snapshots_base
-        with:
-          name: 'snapshots-base'
-
-      - uses: actions/download-artifact@v3
-        if: steps.check_snapshots_base.outputs.exists == 'true'
-        with:
-          name: snapshots-base
-          path: cypress/snapshots/base/
-      - name: Display structure of downloaded files
-        if: steps.check_snapshots_base.outputs.exists == 'true'
-        run: ls -R
-        working-directory: cypress/snapshots/base/
       # Checkout and setup
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
-          node-version: '14.x'
+          node-version: "14.x"
       - name: Install dependencies
         run: npm install
-      # Update the snapshots based on the current UI
-      - name: Update snapshots
+      - name: Run test
         run: npm run int-test
       # Upload the test result artifacts
       - uses: actions/upload-artifact@v2
+        if: always()
         if: failure()
         with:
-          name: snapshots-diff
+          name: snapshoot-diff
           path: cypress/snapshots/diff/
-          retention-days: 30
-
-  updatesnapshots:
-    # Run this job only on comments of pull requests that strictly match
-    # the "/update-snapshots" string
-    name: Update snapshots
-    runs-on: ubuntu-latest
-    if: ${{ github.event.issue.pull_request && github.event.comment.body == '/update-snapshots'}}
-    steps:
-      # Checkout and do a deep fetch to load all commit IDs
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0 # Load all commits
-          token: ${{ secrets.GITHUB_TOKEN }}
-      # Get the SHA and branch name of the comment's pull request
-      # We must use the GitHub API to retrieve these information because they're
-      # not accessibile within workflows triggered by "issue_comment"
-      - name: Get SHA and branch name
-        id: get-branch-and-sha
-        run: |
-          sha_and_branch=$(\
-            curl \
-              -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
-              https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.issue.number }} \
-            | jq -r '.head.sha," ",.head.ref');
-          echo "::set-output name=sha::$(echo $sha_and_branch | cut -d " " -f 1)";
-          echo "::set-output name=branch::$(echo $sha_and_branch | cut -d " " -f 2)"
-      # Checkout the comment's branch
-      - name: Fetch Branch
-        run: git fetch
-      - name: Checkout Branch
-        run: git checkout ${{ steps.get-branch-and-sha.outputs.branch }}
-      # Setup testing environment
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '14.x'
-      - name: Install dependencies
-        run: npm install
-      # Update the snapshots based on the current UI
-      - name: Update snapshots
-        run: npm run int2-test
-      # Commit the changes to the pull request branch
-      - uses: actions/upload-artifact@v2
-        if: always()
-        with:
-          name: snapshots-base
-          path: cypress/snapshots/base/
           retention-days: 30
