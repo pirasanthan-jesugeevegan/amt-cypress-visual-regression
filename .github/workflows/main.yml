@@ -25,5 +25,5 @@ jobs:
         if: failure()
         with:
           name: snapshoot-diff
-          path: cypress/snapshots/diff/
+          path: cypress/snapshots/
           retention-days: 30
