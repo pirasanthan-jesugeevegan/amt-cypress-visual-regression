@@ -20,12 +20,18 @@ jobs:
           node-version: "14.x"
       - name: Install dependencies
         run: npm install
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
-        run: npx playwright install --with-deps chromium
-      # Run Playwright tests
-      - name: Run Playwright tests
-        run: npx playwright test
+      # Update the snapshots based on the current UI
+      - uses: actions/download-artifact@v3
+          with:
+            name: snapshots-base
+            path: cypress/snapshots/base
+    
+      - name: Display structure of downloaded files
+        run: ls -R
+        working-directory: cypress/snapshots/base
+        
+      - name: Update snapshots
+        run: npm run int-test
       # Upload the test result artifacts
       - uses: actions/upload-artifact@v2
         if: failure()
