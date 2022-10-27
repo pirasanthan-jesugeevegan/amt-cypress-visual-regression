@@ -9,8 +9,11 @@ describe('Home', () => {
     cy.wait(2000);
 
     // Take a screenshot
-    cy.compareSnapshot('movie');
 
+    cy.compareSnapshot('movie', {
+      capture: 'fullPage',
+      errorThreshold: 0.8,
+    });
     // Navigate to people's page
     cy.visit('http://localhost:3000/people');
 
@@ -18,6 +21,9 @@ describe('Home', () => {
     cy.wait(2000);
 
     // Take a screenshot
-    cy.compareSnapshot('People');
+    cy.compareSnapshot('people', {
+      capture: 'fullPage',
+      errorThreshold: 0.8,
+    });
   });
 });
