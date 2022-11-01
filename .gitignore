@@ -3,4 +3,5 @@ node_modules
 public
 cypress/screenshots
 cypress/videos
-cypress/snapshots/diff
+cypress/snapshots
+cypress/.DS_Store

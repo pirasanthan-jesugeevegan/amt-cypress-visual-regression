@@ -1,9 +1,9 @@
-import React from "react";
-import Link from "next/link";
-import Layout from "../../components/Layout";
-import sanity from "../../lib/sanity";
-import listStyles from "../../styles/list";
-import imageUrlFor from "../../utils/imageUrlFor";
+import React from 'react';
+import Link from 'next/link';
+import Layout from '../../components/Layout';
+import sanity from '../../lib/sanity';
+import listStyles from '../../styles/list';
+import imageUrlFor from '../../utils/imageUrlFor';
 
 const personsQuery = `*[_type == "person"] { _id }`;
 
@@ -31,7 +31,7 @@ const Person = ({ person }) => {
           <h1 className="title">{person.name}</h1>
           <h2>Related movies</h2>
           <ul className="list">
-            {(person.actedIn || []).map(movie => (
+            {(person.actedIn || []).map((movie) => (
               <li key={movie._id}>
                 <Link href="/movie/[id]" as={`/movie/${movie._id}`}>
                   <a className="link">
@@ -104,8 +104,8 @@ const Person = ({ person }) => {
 export const getStaticPaths = async () => {
   // Get the paths we want to pre-render based on persons
   const persons = await sanity.fetch(personsQuery);
-  const paths = persons.map(person => ({
-    params: { id: person._id }
+  const paths = persons.map((person) => ({
+    params: { id: person._id },
   }));
 
   // We'll pre-render only these paths at build time.

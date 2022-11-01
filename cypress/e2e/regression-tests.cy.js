@@ -1,29 +1,37 @@
-// Use the 'describe' to give your test a name
-describe('Home', () => {
-  // The 'it' property indicates a certain condition you're expecting
-  it('Page ', () => {
-    // Navigate to the homepage (make sure it's running)
+describe('Visual Regression', () => {
+  beforeEach(() => {
     cy.visit('http://localhost:3000/');
-
-    // Wait for 2 seconds to load page fully
     cy.wait(2000);
-
+  });
+  it('Take screenshot of All pages', () => {
     // Take a screenshot
+    const pages = ['movie', 'people'];
+    for (const page of pages) {
+      page === 'people' && cy.get('a[href="/people"]').click() && cy.wait(2000);
+      cy.compareSnapshot(page, {
+        capture: 'fullPage',
+        errorThreshold: 0.1,
+      });
+    }
+  });
+  it('Take screenshot of an element', () => {
+    // Take a screenshot of a card
+    const pages = ['movie', 'people'];
 
-    cy.compareSnapshot('movie', {
-      capture: 'fullPage',
-      errorThreshold: 0.8,
-    });
-    // Navigate to people's page
-    cy.visit('http://localhost:3000/people');
-
-    // Wait for 2 seconds to load page fully
-    cy.wait(2000);
-
-    // Take a screenshot
-    cy.compareSnapshot('people', {
-      capture: 'fullPage',
-      errorThreshold: 0.8,
-    });
+    for (const page of pages) {
+      if (page === 'people') {
+        cy.get('a[href="/people"]').click();
+        cy.wait(5000);
+        cy.get('[test-id="person_anne-hathaway"]')
+          .scrollIntoView()
+          .should('be.visible')
+          .compareSnapshot('card-person_anne-hathaway');
+      } else {
+        cy.get('[test-id="movie_10681"]')
+          .scrollIntoView()
+          .should('be.visible')
+          .compareSnapshot('card-movie_10681');
+      }
+    }
   });
 });

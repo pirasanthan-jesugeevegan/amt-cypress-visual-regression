@@ -15,3 +15,18 @@
 
 // Import commands.js using ES2015 syntax:
 import './commands';
+
+Cypress.on('uncaught:exception', (err, runnable) => {
+  // returning false here prevents Cypress from failing the test
+  return false;
+});
+
+before(() => {
+  Cypress.env().type === 'actual' &&
+    cy.exec('aws s3 cp s3://web-ui-pj/ cypress/snapshots/base --recursive');
+});
+
+after(() => {
+  Cypress.env().type === 'base' &&
+    cy.exec('aws s3 sync cypress/snapshots/base s3://web-ui-pj/');
+});

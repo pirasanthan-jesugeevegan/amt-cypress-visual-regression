@@ -4,6 +4,7 @@ import Layout from '../components/Layout';
 import sanity from '../lib/sanity';
 import listStyles from '../styles/list';
 import imageUrlFor from '../utils/imageUrlFor';
+import shuffle from '../utils/shuffle';
 
 const query = `*[_type == "movie"] {
   _id,
@@ -14,33 +15,15 @@ const query = `*[_type == "movie"] {
   "director": crewMembers[job == "Director"][0].person->name
 }[0...50]
 `;
-function shuffle(array) {
-  let currentIndex = array.length,
-    randomIndex;
 
-  // While there remain elements to shuffle.
-  while (currentIndex != 0) {
-    // Pick a remaining element.
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex--;
-
-    // And swap it with the current element.
-    [array[currentIndex], array[randomIndex]] = [
-      array[randomIndex],
-      array[currentIndex],
-    ];
-  }
-
-  return array;
-}
 const Movies = ({ movies }) => {
-  shuffle(movies);
+  // shuffle(movies);
   return (
     <Layout>
       <div className="movies">
         <ul className="list">
           {movies.map((movie) => (
-            <li key={movie._id} className="list__item">
+            <li key={movie._id} className="list__item" test-id={movie._id}>
               <Link href="/movie/[id]" as={`/movie/${movie._id}`}>
                 <a>
                   {movie.poster && (
