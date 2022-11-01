@@ -30,3 +30,4 @@ after(() => {
   Cypress.env().type === 'base' &&
     cy.exec('aws s3 sync cypress/snapshots/base s3://web-ui-pj/');
 });
+// sssss
