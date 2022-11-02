@@ -6,15 +6,15 @@ module.exports = defineConfig({
       // implement node event listeners here
       getCompareSnapshotsPlugin(on, config);
       on('before:browser:launch', (browser = {}, launchOptions) => {
-        if (browser.name === 'chrome' && browser.isHeadless) {
-          launchOptions.preferences.width = 1920;
-          launchOptions.preferences.height = 1080;
+        if (browser.name === 'chrome') {
+          launchOptions.preferences.width = 1280;
+          launchOptions.preferences.height = 800;
         }
 
         return launchOptions;
       });
     },
   },
-  viewportWidth: 1920,
-  viewportHeight: 1080,
+  viewportWidth: 1280,
+  viewportHeight: 800,
 });
