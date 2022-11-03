@@ -10,7 +10,7 @@ describe('Visual Regression', () => {
       page === 'people' && cy.get('a[href="/people"]').click() && cy.wait(2000);
       cy.compareSnapshot(page, {
         capture: 'fullPage',
-        errorThreshold: 0.1,
+        errorThreshold: 0.01,
       });
     }
   });

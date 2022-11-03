@@ -1,6 +1,5 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import GithubCorner from './GithubCorner';
 
 export default function Layout(props) {
   return (
@@ -18,18 +17,7 @@ export default function Layout(props) {
           <a>People</a>
         </Link>
       </nav>
-      <GithubCorner />
       <div id="main">{props.children}</div>
-      <footer>
-        <a href="http://sanity.io">
-          <img src="/sanity-logo.svg" alt="Sanity Logo" />
-        </a>
-        +
-        <a href="https://github.com/zeit/next.js" alt="NextJs Logo">
-          <img className="next" src="/nextjs-logo.svg" />
-        </a>
-        = 💖
-      </footer>
       <style jsx>{`
         footer {
           padding: 5rem 1rem;
